@@ -1,0 +1,46 @@
+<html>
+<head>
+
+<title>Problema1</title>
+<script src="https://d3js.org/d3.v4.min.js"></script>
+</head>
+<body>
+<script type="text/javascript"> 
+	d3.select("body")
+		.attr("id", "initials")
+		.append("svg")
+		.attr("width", 250)
+		.attr("height", 150)
+		
+	d3.select("svg").append("path")
+		.attr("id", "A1")
+		.attr("d", "M 10 140 L 40 10 L 55 70 L 25 70 L 55 70 L 70 140")
+		.attr("stroke", "red")
+		.attr("stroke-width", 6)
+		.attr("fill", "none")
+		
+	d3.select("svg").append("path")
+		.attr("id", "A2")
+		.attr("d", "M 10 140 L 40 10 L 55 70 L 25 70 L 55 70 L 70 140")
+		.attr("stroke", "red")
+		.attr("stroke-width", 6)
+		.attr("fill", "none")
+		.attr("transform", "translate(170,0)")
+		
+	d3.select("svg").append("path")
+		.attr("id", "C")
+		.attr("d", "M 170 100 L 125 135 L 80 80 L 125 15 L 170 65")
+		.attr("stroke", "red")
+		.attr("stroke-width", 6)
+		.attr("fill", "none")
+								  
+	d3.select("svg").append("path")
+		.attr("id", "border")
+		.attr("d", "M 0 0 L 0 150 L 250 150 L 250 0 L 0 0")
+		.attr("stroke", "black")
+		.attr("stroke-width", 1)
+		.attr("fill", "none")
+								  
+</script>
+</body>
+</html>

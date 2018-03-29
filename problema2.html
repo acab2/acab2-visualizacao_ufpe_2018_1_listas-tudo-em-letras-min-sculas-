@@ -1,0 +1,78 @@
+<html>
+<head>
+
+	<title>Problema2e3</title>
+	<script src="https://d3js.org/d3.v4.min.js"></script>
+
+</head>
+<body>
+
+<script src="https://visualizacao-ufpe.github.io/data_vis_assignments/2018.1/datasetProblema2.js"></script>
+
+<script type="text/javascript"> 
+	
+		
+		var width = 500;
+		
+		d3.select("body").append("svg")
+						.attr("width", width)
+						.attr("height", 300);
+		
+		var dataXInterval = d3.extent(dataset,d=>d.books);
+		var xScale = d3.scaleLinear().domain(dataXInterval).range([0,width]);
+		
+	    var group = d3.select("svg").append("g").attr("transform","translate(0,200)scale(1,-1)");
+		var myColorScale = d3.scaleOrdinal()
+						.domain(["romance","policial","biografia","ficcao","conto","cronica","poesia"])
+						.range(["#fbb4ae","#b3cde3","#ccebc5","#decbe4","#fed9a6","#ffffcc","#e5d8bd"])
+
+		group.selectAll("rect")
+	    .data(dataset)
+	    .enter()
+	    .append("rect")
+	    .attr("x", function(d, indice){return indice*16;})
+	    .attr("y",0)
+	    .attr("width",15)
+		.attr("height", function(d){return d.books + 5;})
+		.attr("fill",function(d){return myColorScale(d.favoriteGenre);});
+		
+		/* não funciona...
+		var highlightYear = group.selectAll("rect")
+	    .data(dataset)
+		.attr("fill",function(d){ if(d.year == 2006) return "black";});
+		*/
+		
+		var arr = ["string1","string2","string3","string4","string5"];
+
+		d3.select("g")
+  .selectAll("text")
+  .data(dataset)
+  .enter()
+  .append("text").attr("transform","translate(0,-10) scale(1,-1)")
+    .text(function(d) { return d.year; })
+	.attr("x", function(d, indice){return indice*16;})
+	.attr("y",0)
+	.style("font-size", 7);
+	
+ 
+	 d3.select("g")
+  .selectAll("circle")
+  .data(dataset)
+  .enter()
+  .append("text")
+    .text(function(d) { return d.books; })
+	.attr("x", function(d, indice){return (indice*16)+4;})
+	.attr("y",function(d){return d.books + 1;})
+	.style("font-size", 7)
+	.attr("fill", "white");
+  								  
+</script>
+<div id="controls">
+  <label for="year">Year:</label>
+  1990
+  <input type="range" id="year" min="1990" max="2017" value="1990"
+     onchange="highlightYear(this.value)">
+  2017
+</div>
+</body>
+</html>
