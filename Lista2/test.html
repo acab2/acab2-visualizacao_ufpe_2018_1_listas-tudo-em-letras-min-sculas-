@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+
+<style type="text/css">
+/* 13. Basic Styling with CSS */
+
+/* Style the lines by removing the fill and applying a stroke */
+.line {
+    fill: none;
+    stroke: #ffab00;
+    stroke-width: 3;
+}
+
+/* Style the dots by assigning a fill and stroke */
+.dot {
+    fill: #ffab00;
+    stroke: #fff;
+}
+
+</style>
+<!-- Body tag is where we will append our SVG and SVG objects-->
+<body>
+<!-- Load in the d3 library -->
+<script src="https://d3js.org/d3.v4.min.js"></script>
+<script src="https://visualizacao-ufpe.github.io/data_vis_assignments/2018.1/saopaulo.js"></script>
+</body>
+
+
+<script>
+var margin = {top: 50, right: 50, bottom: 50, left: 50}
+  , width = 800 - margin.left - margin.right // Use the window's width 
+  , height = 600 - margin.top - margin.bottom; // Use the window's height
+   
+var xScale = d3.scaleTime().domain([new Date(2017, 0, 1), new Date(2017, 11, 31)]).range([0, width]);
+var yScale = d3.scaleLinear().domain([0, 35]).range([height, 0]);
+
+var dataset = function(i){
+	var data = [];
+		for (i = 0; i < 12; i++) { 		
+			data.push({ "x": new Date(2017, i, 1),
+						"y": temperature.DailyMean[i]}); 
+		}
+		return data;
+}
+
+// 7. d3's line generator
+var line = d3.line()    //xScale(d.x.getMonth())
+    .x(function(d, i) { return xScale(d.x); }) // set the x values for the line generator
+    .y(function(d, i) { return yScale(d.y); }) // set the y values for the line generator 
+	
+var svg = d3.select("body").append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+  .append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + " )");
+	
+	svg.append("g").attr("transform", "translate(" + 0 + "," + margin.top + ")")
+	.append("path")
+    //.datum(dataset) // 10. Binds data to the line 
+    .attr("class", "line") // Assign a class for styling 
+    .attr("d", line(dataset())); // 11. Calls the line generator
+	
+	svg.append("g")
+    .attr("class", "x axis")
+    .attr("transform", "translate(0," + height + ")")
+    .call(d3.axisBottom(xScale)); // Create an axis component with d3.axisBottom
+
+// 4. Call the y axis in a group tag
+svg.append("g")
+    .attr("class", "y axis")
+    .call(d3.axisLeft(yScale)); // Create an axis component with d3.axisLeft
+
+
+
+
+
+
+</script>
